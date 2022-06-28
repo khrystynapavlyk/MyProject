@@ -31,3 +31,9 @@ else
 echo "Status ufw is active"
 fi
 echo "end change status"
+
+echo "start installing mysql-server"
+sudo apt install mysql-server -y
+echo "end installing mysql-server"
+
+
