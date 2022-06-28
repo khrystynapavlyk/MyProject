@@ -21,7 +21,6 @@ OUTPUT=$(sudo ufw status)
 echo "${OUTPUT}"
 echo "end sudo ufw status"
 
-
 echo "start change status"
 status=$(sudo ufw status | grep -i status | sed 's/Status: //')
 if [ "$status" == "inactive" ]; then
@@ -35,5 +34,15 @@ echo "end change status"
 echo "start installing mysql-server"
 sudo apt install mysql-server -y
 echo "end installing mysql-server"
+
+echo "start mysql_secure_installation"
+sudo mysql -e "SET PASSWORD FOR root@localhost = PASSWORD('123');FLUSH PRIVILEGES;"
+echo "end mysql_secure_installation"
+
+echo "start FLUSH PRIVILEGES"
+mysql -e "FLUSH PRIVILEGES"
+echo "end FLUSH PRIVILEGES"
+
+
 
 
