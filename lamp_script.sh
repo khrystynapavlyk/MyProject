@@ -48,4 +48,7 @@ sudo apt install php libapache2-mod-php php-mysql -y
 echo $(php -v)
 echo "end instaling php"
 
+echo "start mkdir my_domin"
+sudo mkdir /var/www/khr_domain
+echo "end mkdir my_domin"
 
