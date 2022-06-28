@@ -52,3 +52,41 @@ echo "start mkdir my_domin"
 sudo mkdir /var/www/khr_domain
 echo "end mkdir my_domin"
 
+echo "start assign ownership of the directoryecho "
+sudo chown -R $USER:$USER /var/www/khr_domaim
+echo "start assign ownership of the directory"
+
+echo "start configuring virtual host1"
+cat << EOF > /etc/apache2/sites-available/khr_domain.conf
+<VirtualHost *:80>
+    ServerName khr_domain
+    ServerAlias www.khr_domain
+    ServerAdmin khr@localhost
+    DocumentRoot /var/www/khr_domain
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOF
+echo "end configuring virtual host1"
+
+echo "start configuring virtual host2"
+sudo a2ensite khr_domain
+sudo a2dissite 000-default
+echo $(apache2ctl configtest)
+sudo systemctl reload apache2
+echo "end configuring virtual host2"
+
+echo "add index.html"
+cat << EOF > /var/www/khr_domain/index.html
+<html>
+  <head>
+    <title>khr_domain website</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+
+    <p>This is the landing page of <strong>khr_domain</strong>.</p>
+  </body>
+</html>
+EOF
+echo "end add index.html"
