@@ -90,3 +90,11 @@ cat << EOF > /var/www/khr_domain/index.html
 </html>
 EOF
 echo "end add index.html"
+
+echo "Start adding directoryIndex settings on Apache"
+cat << EOF > /etc/apache2/mods-enabled/dir.conf
+<IfModule mod_dir.c>
+         DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+EOF
+echo "End adding directoryIndex settings on Apache"
