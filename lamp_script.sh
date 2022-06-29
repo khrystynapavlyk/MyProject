@@ -109,3 +109,12 @@ cat << EOF > /var/www/khr_domain/info.php
 phpinfo();
 EOF
 echo "End testing PHP Processing on my Web Server"
+
+echo $(sudo mysql -e "SHOW DATABASES;")
+
+echo "Start creating new database"
+mysql -e "CREATE DATABASE khr_database;"
+echo "End creating new database""
+
+echo $(sudo mysql -e "SHOW DATABASES;")
+
