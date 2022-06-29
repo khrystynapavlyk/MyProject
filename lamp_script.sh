@@ -134,5 +134,11 @@ echo $(sudo mysql -e "SHOW GRANTS FOR khr_user;")
 
 echo "Star to giving my user permission"
 
+echo "Start creating tables in khr_database"
 
+sudo mysql -e "SHOW TABLES IN khr_database;"
+sudo mysql -e "CREATE TABLE khr_database.todo_list (item_id INT AUTO_INCREMENT, content VARCHAR(255), PRIMARY KEY(item_id));"
+sudo mysql -e "SHOW TABLES IN khr_database;"
+
+echo "End creating tables in khr_database"
 
