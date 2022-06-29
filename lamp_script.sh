@@ -112,33 +112,42 @@ echo "End testing PHP Processing on my Web Server"
 
 echo "Start creating new database"
 
-echo $(sudo mysql -e "SHOW DATABASES;")
+echo $(mysql -e "SHOW DATABASES;")
 mysql -e "CREATE DATABASE khr_database;"
-echo $(sudo mysql -e "SHOW DATABASES;")
+echo $(mysql -e "SHOW DATABASES;")
 
 echo "End creating new database" 
 
 echo"Start to create user"
 
-echo $(sudo mysql -e "SELECT user FROM mysql.user;")
+echo $(mysql -e "SELECT user FROM mysql.user;")
 mysql -e "CREATE USER 'khr_user'@'%' IDENTIFIED BY '123';"
-echo $(sudo mysql -e "SELECT user FROM mysql.user;")
+echo $(mysql -e "SELECT user FROM mysql.user;")
 
 echo "End to create user"
 
 echo "Star to giving my user permission"
 
-echo $(sudo mysql -e "SHOW GRANTS FOR khr_user;")
+echo $(mysql -e "SHOW GRANTS FOR khr_user;")
 mysql -e "GRANT ALL ON khr_database.* TO 'khr_user'@'%';"
-echo $(sudo mysql -e "SHOW GRANTS FOR khr_user;")
+echo $(mysql -e "SHOW GRANTS FOR khr_user;")
 
 echo "Star to giving my user permission"
 
 echo "Start creating tables in khr_database"
 
-sudo mysql -e "SHOW TABLES IN khr_database;"
-sudo mysql -e "CREATE TABLE khr_database.todo_list (item_id INT AUTO_INCREMENT, content VARCHAR(255), PRIMARY KEY(item_id));"
-sudo mysql -e "SHOW TABLES IN khr_database;"
+echo $(mysql -e "SHOW TABLES IN khr_database;")
+mysql -e "CREATE TABLE khr_database.todo_list (item_id INT AUTO_INCREMENT, content VARCHAR(255), PRIMARY KEY(item_id));"
+echo $(mysql -e "SHOW TABLES IN khr_database;")
 
 echo "End creating tables in khr_database"
 
+echo "Start to insert text into todo_list table"
+
+echo $(mysql -e "SELECT * FROM khr_database.todo_list;")
+mysql -e "INSERT INTO khr_database.todo_list (content) VALUES ('Hi');"
+mysql -e "INSERT INTO khr_database.todo_list (content) VALUES ('How are you?');"
+mysql -e "INSERT INTO khr_database.todo_list (content) VALUES ('Goodbye');"
+echo $(mysql -e "SELECT * FROM khr_database.todo_list;")
+
+echo"End to insert text into todo_list table"
