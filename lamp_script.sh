@@ -24,7 +24,7 @@ echo "end sudo ufw status"
 echo "start change status"
 status=$(sudo ufw status | grep -i status | sed 's/Status: //')
 if [ "$status" == "inactive" ]; then
-sudo ufw enable
+sudo ufw --force enable
 echo "changed status to active"
 else
 echo "Status ufw is active"
