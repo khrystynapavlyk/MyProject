@@ -102,3 +102,10 @@ echo "End adding directoryIndex settings on Apache"
 echo "Start systemctl reload apache2"
 sudo systemctl reload apache2
 echo "End systemctl reload apache2" 
+
+echo "Start testing PHP Processing on my Web Server"
+cat << EOF > /var/www/khr_domain/info.php
+<?php
+phpinfo();
+EOF
+echo "End testing PHP Processing on my Web Server"
