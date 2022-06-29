@@ -115,6 +115,7 @@ echo "Start creating new database"
 echo $(sudo mysql -e "SHOW DATABASES;")
 mysql -e "CREATE DATABASE khr_database;"
 echo $(sudo mysql -e "SHOW DATABASES;")
+
 echo "End creating new database" 
 
 echo"Start to create user"
@@ -124,5 +125,14 @@ mysql -e "CREATE USER 'khr_user'@'%' IDENTIFIED BY '123';"
 echo $(sudo mysql -e "SELECT user FROM mysql.user;")
 
 echo "End to create user"
+
+echo "Star to giving my user permission"
+
+echo $(sudo mysql -e "SHOW GRANTS FOR khr_user;")
+mysql -e "GRANT ALL ON khr_database.* TO 'khr_user'@'%';"
+echo $(sudo mysql -e "SHOW GRANTS FOR khr_user;")
+
+echo "Star to giving my user permission"
+
 
 
