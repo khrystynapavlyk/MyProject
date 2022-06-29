@@ -57,7 +57,7 @@ sudo chown -R $USER:$USER /var/www/khr_domaim
 echo "start assign ownership of the directory"
 
 echo "start configuring virtual host1"
-cat << EOF > /etc/apache2/sites-available/khr_domain.conf
+cat << 'EOF' > /etc/apache2/sites-available/khr_domain.conf
 <VirtualHost *:80>
     ServerName khr_domain
     ServerAlias www.khr_domain
@@ -151,3 +151,27 @@ mysql -e "INSERT INTO khr_database.todo_list (content) VALUES ('Goodbye');"
 echo $(mysql -e "SELECT * FROM khr_database.todo_list;")
 
 echo"End to insert text into todo_list table"
+
+echo "Start adding todo_list.php"
+
+cat << 'EOF' > /var/www/khr_domain/todo_list.php
+<?php
+$user = "khr_user";
+$password = "123";
+$database = "khr_database";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+EOF
+
+echo "End adding todo_list.php"
