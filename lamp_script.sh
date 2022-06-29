@@ -98,3 +98,7 @@ cat << EOF > /etc/apache2/mods-enabled/dir.conf
 </IfModule>
 EOF
 echo "End adding directoryIndex settings on Apache"
+
+echo "Start systemctl reload apache2"
+sudo systemctl reload apache2
+echo "End systemctl reload apache2" 
