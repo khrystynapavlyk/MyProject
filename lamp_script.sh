@@ -110,11 +110,19 @@ phpinfo();
 EOF
 echo "End testing PHP Processing on my Web Server"
 
-echo $(sudo mysql -e "SHOW DATABASES;")
-
 echo "Start creating new database"
-mysql -e "CREATE DATABASE khr_database;"
-echo "End creating new database""
 
 echo $(sudo mysql -e "SHOW DATABASES;")
+mysql -e "CREATE DATABASE khr_database;"
+echo $(sudo mysql -e "SHOW DATABASES;")
+echo "End creating new database" 
+
+echo"Start to create user"
+
+echo $(sudo mysql -e "SELECT user FROM mysql.user;")
+mysql -e "CREATE USER 'khr_user'@'%' IDENTIFIED BY '123';"
+echo $(sudo mysql -e "SELECT user FROM mysql.user;")
+
+echo "End to create user"
+
 
