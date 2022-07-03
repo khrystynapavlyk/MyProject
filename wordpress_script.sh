@@ -19,3 +19,15 @@ cat << 'EOF' > /etc/apache2/sites-available/khr_wordpress.conf
 EOF
 echo "End creating khr_wordpress.cong"
 
+echo "Start a2enmod rewrite"
+a2enmod rewrite
+echo "End a2enmod rewrite"
+
+echo "Start apache2ctl configtest"
+OUTPUT=$(sudo apache2ctl configtest)
+echo "${OUTPUT}"
+echo "End apache2ctl configtest"
+
+echo "Start systemctl restart apache2"
+systemctl restart apache2
+echo "End systemctl restart apache2"
