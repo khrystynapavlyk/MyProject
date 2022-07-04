@@ -51,3 +51,19 @@ echo "End cd /tmp && curl -O https://wordpress.org/latest.tar.gz"
 echo "Start tar xzvf /tmp/latest.tar.gz"
 tar xzvf /tmp/latest.tar.gz
 echo "End tar xzvf /tmp/latest.tar.gz"
+
+echo "Start touch /tmp/wordpress/.htaccess"
+touch /tmp/wordpress/.htaccess
+echo "End touch /tmp/wordpress/.htaccess"
+
+echo "Start cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php"
+cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php
+echo "End cp /tmp/wordpress/wp-config-sample.php /tmp/wordpress/wp-config.php"
+
+echo "Start mkdir /tmp/wordpress/wp-content/upgrade"
+mkdir /tmp/wordpress/wp-content/upgrade
+echo "End mkdir /tmp/wordpress/wp-content/upgrade"
+
+echo "Start cp -a /tmp/wordpress/. /var/www/khr_wordpress"
+sudo cp -a /tmp/wordpress/. /var/www/khr_wordpress
+echo "End cp -a /tmp/wordpress/. /var/www/khr_wordpress"
