@@ -67,3 +67,15 @@ echo "End mkdir /tmp/wordpress/wp-content/upgrade"
 echo "Start cp -a /tmp/wordpress/. /var/www/khr_wordpress"
 sudo cp -a /tmp/wordpress/. /var/www/khr_wordpress
 echo "End cp -a /tmp/wordpress/. /var/www/khr_wordpress"
+
+echo "Start chown -R www-data:www-data /var/www/khr_wordpress"
+sudo chown -R www-data:www-data /var/www/khr_wordpress
+echo "End chown -R www-data:www-data /var/www/khr_wordpress"
+
+echo "Start find /var/www/khr_wordpress/ -type d -exec chmod 750 {} \;"
+sudo find /var/www/khr_wordpress/ -type d -exec chmod 750 {} \;
+echo "End find /var/www/khr_wordpress/ -type d -exec chmod 750 {} \;"
+
+echo "Start find /var/www/khr_wordpress/ -type f -exec chmod 640 {} \;"
+sudo find /var/www/khr_wordpress/ -type f -exec chmod 640 {} \;
+echo "End find /var/www/khr_wordpress/ -type f -exec chmod 640 {} \;"
