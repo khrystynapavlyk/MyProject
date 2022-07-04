@@ -43,3 +43,11 @@ echo "End apache2ctl configtest"
 echo "Start systemctl restart apache2"
 sudo systemctl restart apache2
 echo "End systemctl restart apache2"
+
+echo "Srart cd /tmp && curl -O https://wordpress.org/latest.tar.gz"
+cd /tmp && curl -O https://wordpress.org/latest.tar.gz
+echo "End cd /tmp && curl -O https://wordpress.org/latest.tar.gz"
+
+echo "Start tar xzvf /tmp/latest.tar.gz"
+tar xzvf /tmp/latest.tar.gz
+echo "End tar xzvf /tmp/latest.tar.gz"
