@@ -79,3 +79,10 @@ echo "End find /var/www/khr_wordpress/ -type d -exec chmod 750 {} \;"
 echo "Start find /var/www/khr_wordpress/ -type f -exec chmod 640 {} \;"
 sudo find /var/www/khr_wordpress/ -type f -exec chmod 640 {} \;
 echo "End find /var/www/khr_wordpress/ -type f -exec chmod 640 {} \;"
+
+echo "Start setting Up the WordPress Configuration File"
+SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
+STRING='put your unique phrase here'
+printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s /var/www/khr_wordpress/wp-config.php
+echo "End setting Up the WordPress Configuration File"
+
