@@ -35,3 +35,11 @@ echo "End systemctl restart apache2"
 echo "Srart a2enmod rewrite"
 sudo a2enmod rewrite
 echo "End a2enmod rewrite"
+
+echo "Start apache2ctl configtest"
+sudo apache2ctl configtest
+echo "End apache2ctl configtest"
+
+echo "Start systemctl restart apache2"
+sudo systemctl restart apache2
+echo "End systemctl restart apache2"
