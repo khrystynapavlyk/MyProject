@@ -17,6 +17,10 @@ mysql -e "GRANT ALL ON "$1".* TO '"$2"'@'%';"
 echo $(mysql -e "SHOW GRANTS FOR "$2";")
 echo "End to grant all database to user"
 
+echo "Start FLUSH PRIVILEGES"
+mysql -e "FLUSH PRIVILEGES;"
+echo "Start FLUSH PRIVILEGES"
+
 echo "Start apt update"
 sudo apt update -y
 echo "End apt update"
@@ -107,7 +111,6 @@ echo "End setting Up the WordPress Configuration File"
 echo "Start to modify database_name_here"
 sed -i "s/database_name_here/$1/g" /var/www/khr_wordpress/wp-config.php
 echo "End to modify database_name_here"
-
 
 echo "Start to modify username_here"
 sed -i "s/username_here/$2/g" /var/www/khr_wordpress/wp-config.php
