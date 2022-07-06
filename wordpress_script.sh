@@ -104,3 +104,19 @@ STRING='put your unique phrase here'
 printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s /var/www/khr_wordpress/wp-config.php
 echo "End setting Up the WordPress Configuration File"
 
+echo "Start to modify database_name_here"
+sed -i "s/database_name_here/$1/g" /var/www/khr_wordpress/wp-config.php
+echo "End to modify database_name_here"
+
+
+echo "Start to modify username_here"
+sed -i "s/username_here/$2/g" /var/www/khr_wordpress/wp-config.php
+echo "End to modify username_here"
+
+echo "Start to modify password_here"
+sed -i "s/password_here/$3/g" /var/www/khr_wordpress/wp-config.php
+echo "End to modify password_here"
+
+echo "Start to add define('FS_METHOD', 'direct');"
+echo "define('FS_METHOD', 'direct');" >> /var/www/khr_wordpress/wp-config.php
+echo "End to add define('FS_METHOD', 'direct');"
