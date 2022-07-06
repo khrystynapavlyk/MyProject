@@ -8,6 +8,9 @@ sudo bash wordpress_script.sh param1 param2 param3
 ```
 
 Where:
+
 $1 = param1 = 'DB_NAME'
+
 $2 = param2 = 'DB_USER'
+
 $3 = param3 = 'DB_PASSWORD'
