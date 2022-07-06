@@ -53,7 +53,7 @@ sudo mkdir /var/www/khr_domain
 echo "end mkdir my_domin"
 
 echo "start assign ownership of the directoryecho "
-sudo chown -R $USER:$USER /var/www/khr_domaim
+sudo chown -R $USER:$USER /var/www/khr_domain
 echo "start assign ownership of the directory"
 
 echo "start configuring virtual host1"

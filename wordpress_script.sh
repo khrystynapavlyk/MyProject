@@ -35,11 +35,24 @@ echo "End systemctl restart apache2"
 
 echo "Start creating khr_wordpress.cong"
 cat << 'EOF' > /etc/apache2/sites-available/khr_wordpress.conf
-<Directory /var/www/khr_wordpress/>
+<VirtualHost *:80>
+    ServerName example.com
+    DocumentRoot /var/www/wordpress
+    <Directory /var/www/wordpress>
+        Options Indexes FollowSymLinks MultiViews
         AllowOverride All
-</Directory>
+        Order allow,deny
+        allow from all
+    </Directory>
+</VirtualHost>
 EOF
 echo "End creating khr_wordpress.cong"
+
+echo "Start enable khr_wordpress.conf"
+sudo a2ensite khr_wordpress.conf
+sudo a2dissite khr_domain.conf
+sudo systemctl reload apache2
+echo "Endenable khr_wordpress.conf"
 
 echo "Start a2enmod rewrite"
 a2enmod rewrite
