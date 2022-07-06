@@ -1,4 +1,22 @@
 #!/bin/bash
+echo "Start creating new DATABASE"
+echo $(mysql -e "SHOW DATABASES;")
+sudo mysql -e "CREATE DATABASE "$1" DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+echo $(mysql -e "SHOW DATABASES;")
+echo "End creating new DATABASE"
+
+echo "Start to create user"
+echo $(mysql -e "SELECT user FROM mysql.user;")
+mysql -e "CREATE USER '"$2"'@'%' IDENTIFIED WITH mysql_native_password BY '"$3"';"
+echo $(mysql -e "SELECT user FROM mysql.user;")
+echo "End to create user"
+
+echo "Start to grant all database to user"
+echo $(mysql -e "SHOW GRANTS FOR "$2";")
+mysql -e "GRANT ALL ON "$1".* TO '"$2"'@'%';"
+echo $(mysql -e "SHOW GRANTS FOR "$2";")
+echo "End to grant all database to user"
+
 echo "Start apt update"
 sudo apt update -y
 echo "End apt update"
