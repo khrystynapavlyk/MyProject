@@ -37,8 +37,8 @@ echo "Start creating khr_wordpress.cong"
 cat << 'EOF' > /etc/apache2/sites-available/khr_wordpress.conf
 <VirtualHost *:80>
     ServerName example.com
-    DocumentRoot /var/www/wordpress
-    <Directory /var/www/wordpress>
+    DocumentRoot /var/www/khr_wordpress
+    <Directory /var/www/khr_wordpress>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride All
         Order allow,deny
