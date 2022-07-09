@@ -71,3 +71,16 @@ server {
 }
 EOF
 echo "End to open a new configuration file in Nginx’s"
+
+echo "Start ln -s /etc/nginx/sites-available/khr_domain /etc/nginx/sites-enabled/"
+sudo ln -s /etc/nginx/sites-available/khr_domain /etc/nginx/sites-enabled/
+echo "End ln -s /etc/nginx/sites-available/khr_domain /etc/nginx/sites-enabled/"
+
+echo "Start unlink /etc/nginx/sites-enabled/default"
+sudo unlink /etc/nginx/sites-enabled/default
+echo "End unlink /etc/nginx/sites-enabled/default"
+
+echo "Start nginx -t"
+OUTPUT=$(nginx -t)
+echo "${OUTPUT}"
+echo "End nginx -t"
