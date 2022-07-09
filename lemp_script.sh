@@ -28,3 +28,7 @@ echo "end installing mysql-server"
 echo "start mysql_secure_installation"
 sudo mysql -e "SET PASSWORD FOR root@localhost = PASSWORD('123');FLUSH PRIVILEGES;"
 echo "end mysql_secure_installation"
+
+echo "start FLUSH PRIVILEGES"
+mysql -e "FLUSH PRIVILEGES"
+echo "end FLUSH PRIVILEGES"
