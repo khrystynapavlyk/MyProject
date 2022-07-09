@@ -111,3 +111,22 @@ cat << 'EOF' > /var/www/khr_domain/index.html
 </html>
 EOF
 echo "End to add index.html"
+
+echo "Start creating new database"
+echo $(mysql -e "SHOW DATABASES;")
+mysql -e "CREATE DATABASE "$1"";
+echo $(mysql -e "SHOW DATABASES;")
+echo "End creating new database" 
+
+echo "Start to create user"
+echo $(mysql -e "SELECT user FROM mysql.user;")
+mysql -e "CREATE USER '"$2"'@'%' IDENTIFIED WITH mysql_native_password BY '"$3"';"
+echo $(mysql -e "SELECT user FROM mysql.user;")
+echo "End to create user"
+
+echo "Start to grant all database to user"
+echo $(mysql -e "SHOW GRANTS FOR "$2";")
+mysql -e "GRANT ALL ON "$1".* TO '"$2"'@'%';"
+echo $(mysql -e "SHOW GRANTS FOR "$2";")
+echo "End to grant all database to user"
+
