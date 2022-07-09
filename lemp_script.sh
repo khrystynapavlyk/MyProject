@@ -84,3 +84,22 @@ echo "Start nginx -t"
 OUTPUT=$(nginx -t)
 echo "${OUTPUT}"
 echo "End nginx -t"
+
+echo "Start systemctl reload nginx"
+sudo systemctl reload nginx
+echo "End systemctl reload nginx"
+
+echo "Start to add index.html"
+cat << 'EOF' > /var/www/khr_domain/index.html
+<html>
+  <head>
+    <title>khr_domain website</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+
+    <p>This is the landing page of <strong>khr_domain</strong>.</p>
+  </body>
+</html>
+EOF
+echo "End to add index.html"
