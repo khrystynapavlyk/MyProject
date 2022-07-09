@@ -33,6 +33,14 @@ echo "Start FLUSH PRIVILEGES"
 mysql -e "FLUSH PRIVILEGES"
 echo "End FLUSH PRIVILEGES"
 
+echo "Start to add php7.4"
+sudo apt install software-properties-common
+sudo add-apt-repository --yes ppa:ondrej/php
+sudo apt-get install php7.4-fpm
+sudo service nginx restart
+sudo service php7.4-fpm restart
+echo "End to add php7.4"
+
 echo "Start instaling php"
 sudo apt install php-fpm php-mysql -y
 echo $(php -v)
