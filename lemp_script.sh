@@ -112,6 +112,13 @@ cat << 'EOF' > /var/www/khr_domain/index.html
 EOF
 echo "End to add index.html"
 
+echo "Start testing PHP Processing on my Web Server"
+cat << EOF > /var/www/khr_domain/info.php
+<?php
+phpinfo();
+EOF
+echo "End testing PHP Processing on my Web Server"
+
 echo "Start creating new database"
 echo $(mysql -e "SHOW DATABASES;")
 mysql -e "CREATE DATABASE "$1"";
