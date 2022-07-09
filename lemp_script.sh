@@ -32,3 +32,8 @@ echo "end mysql_secure_installation"
 echo "start FLUSH PRIVILEGES"
 mysql -e "FLUSH PRIVILEGES"
 echo "end FLUSH PRIVILEGES"
+
+echo "start instaling php"
+sudo apt install php libapache2-mod-php php-mysql -y
+echo $(php -v)
+echo "end instaling php"
