@@ -34,7 +34,7 @@ mysql -e "FLUSH PRIVILEGES"
 echo "End FLUSH PRIVILEGES"
 
 echo "Start to add php7.4"
-sudo apt install software-properties-common
+sudo apt install software-properties-common -y
 sudo add-apt-repository --yes ppa:ondrej/php
 sudo apt-get install php7.4-fpm php7.4-mysql -y
 sudo service nginx restart
