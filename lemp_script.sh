@@ -16,24 +16,58 @@ echo "Start ufw allow 'Nginx HTTP'"
 sudo ufw allow 'Nginx HTTP'
 echo "End ufw allow 'Nginx HTTP'"
 
-echo "start sudo ufw status"
+echo "Start sudo ufw status"
 OUTPUT=$(sudo ufw status)
 echo "${OUTPUT}"
-echo "end sudo ufw status"
+echo "End sudo ufw status"
 
-echo "start installing mysql-server"
+echo "Start installing mysql-server"
 sudo apt install mysql-server -y
-echo "end installing mysql-server"
+echo "End installing mysql-server"
 
-echo "start mysql_secure_installation"
+echo "Start mysql_secure_installation"
 sudo mysql -e "SET PASSWORD FOR root@localhost = PASSWORD('123');FLUSH PRIVILEGES;"
-echo "end mysql_secure_installation"
+echo "End mysql_secure_installation"
 
-echo "start FLUSH PRIVILEGES"
+echo "Start FLUSH PRIVILEGES"
 mysql -e "FLUSH PRIVILEGES"
-echo "end FLUSH PRIVILEGES"
+echo "End FLUSH PRIVILEGES"
 
-echo "start instaling php"
+echo "Start instaling php"
 sudo apt install php-fpm php-mysql -y
 echo $(php -v)
-echo "end instaling php"
+echo "End instaling php"
+
+echo "Start mkdir my_domin"
+sudo mkdir /var/www/khr_domain
+echo "End mkdir my_domin"
+
+echo "Start assign ownership of the directoryecho "
+sudo chown -R $USER:$USER /var/www/khr_domain
+echo "End assign ownership of the directory"
+
+echo "Start to open a new configuration file in Nginx’s"
+cat << 'EOF' > /etc/nginx/sites-available/khr_domain
+server {
+    listen 80;
+    server_name khr_domain www.khr_domain;
+    root /var/www/khr_domain;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+}
+EOF
+echo "End to open a new configuration file in Nginx’s"
