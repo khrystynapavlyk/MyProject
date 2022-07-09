@@ -20,3 +20,11 @@ echo "start sudo ufw status"
 OUTPUT=$(sudo ufw status)
 echo "${OUTPUT}"
 echo "end sudo ufw status"
+
+echo "start installing mysql-server"
+sudo apt install mysql-server -y
+echo "end installing mysql-server"
+
+echo "start mysql_secure_installation"
+sudo mysql -e "SET PASSWORD FOR root@localhost = PASSWORD('123');FLUSH PRIVILEGES;"
+echo "end mysql_secure_installation"
