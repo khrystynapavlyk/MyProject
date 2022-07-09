@@ -36,7 +36,7 @@ echo "End FLUSH PRIVILEGES"
 echo "Start to add php7.4"
 sudo apt install software-properties-common
 sudo add-apt-repository --yes ppa:ondrej/php
-sudo apt-get install php7.4-fpm
+sudo apt-get install php7.4-fpm php7.4-mysql -y
 sudo service nginx restart
 sudo service php7.4-fpm restart
 echo "End to add php7.4"
@@ -116,7 +116,7 @@ echo "Start creating new database"
 echo $(mysql -e "SHOW DATABASES;")
 mysql -e "CREATE DATABASE "$1"";
 echo $(mysql -e "SHOW DATABASES;")
-echo "End creating new database" 
+echo "End creating new database"
 
 echo "Start to create user"
 echo $(mysql -e "SELECT user FROM mysql.user;")
@@ -130,3 +130,49 @@ mysql -e "GRANT ALL ON "$1".* TO '"$2"'@'%';"
 echo $(mysql -e "SHOW GRANTS FOR "$2";")
 echo "End to grant all database to user"
 
+echo "Start creating tables in "$1""
+echo $(mysql -e "SHOW TABLES IN "$1";")
+mysql -e "CREATE TABLE "$1".todo_list (item_id INT AUTO_INCREMENT, content VARCHAR(255), PRIMARY KEY(item_id));"
+echo $(mysql -e "SHOW TABLES IN "$1";")
+echo "End creating tables in khr_database"
+
+echo "Start to insert text into todo_list table"
+echo $(mysql -e "SELECT * FROM "$1".todo_list;")
+mysql -e "INSERT INTO "$1".todo_list (content) VALUES ('Hi');"
+mysql -e "INSERT INTO "$1".todo_list (content) VALUES ('How are you?');"
+mysql -e "INSERT INTO "$1".todo_list (content) VALUES ('Goodbye');"
+echo $(mysql -e "SELECT * FROM "$1".todo_list;")
+echo "End to insert text into todo_list table"
+
+echo "Start adding todo_list.php"
+cat << 'EOF' > /var/www/khr_domain/todo_list.php
+<?php
+$user = "db_user";
+$password = "db_password";
+$database = "db_database";
+$table = "todo_list";
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+EOF
+echo "End adding todo_list.php"
+
+echo "Start to modify database_name_here"
+sed -i "s/db_database/$1/g" /var/www/khr_domain/todo_list.php
+echo "End to modify database_name_here"
+
+echo "Start to modify username_here"
+sed -i "s/db_user/$2/g" /var/www/khr_domain/todo_list.php
+echo "End to modify username_here"
+
+echo "Start to modify password_here"
+sed -i "s/db_password/$3/g" /var/www/khr_domain/todo_list.php
+echo "End to modify password_here"
