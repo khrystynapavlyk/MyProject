@@ -196,6 +196,14 @@ location /wp-content/uploads/ {
 EOF
 echo "End Configuring Nginx"
 
+echo "Start ln -s /etc/nginx/sites-available/khr_wordpress /etc/nginx/sites-enabled/"
+sudo ln -s /etc/nginx/sites-available/khr_wordpress /etc/nginx/sites-enabled/
+echo "End ln -s /etc/nginx/sites-available/khr_wordpress /etc/nginx/sites-enabled/"
+
+echo "Start unlink /etc/nginx/sites-enabled/khr_domain"
+sudo unlink /etc/nginx/sites-enabled/khr_domain
+echo "End unlink /etc/nginx/sites-enabled/khr_domain"
+
 echo "Start nginx -t"
 sudo nginx -t
 echo "End nginx -t"
