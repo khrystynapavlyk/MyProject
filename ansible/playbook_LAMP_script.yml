@@ -1,0 +1,12 @@
+---
+- name: Install Apache stack
+  hosts: LINUX_1
+  become: yes
+  roles:
+    - Apache
+
+- name: Install Nginx stack
+  hosts: LINUX_2
+  become: yes
+  roles:
+    - Nginx

@@ -1,0 +1,28 @@
+---
+# tasks file for Nginx
+- name: Ping my servers
+  ping:
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Nginx
+  apt: 
+     name: nginx
+     state: present
+
+- name: Start Nginx service
+  service:
+     name: nginx
+     state: started
+     enabled: yes
+
+- name: Enable UFW
+  command: ufw --force enable
+ 
+- name: Allow incoming traffic on port 80
+  command: ufw allow 80 
+
+- name: Reload UFW
+  command: ufw reload     
