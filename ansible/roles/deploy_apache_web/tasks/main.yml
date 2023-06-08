@@ -1,0 +1,19 @@
+---
+# tasks file for deploy_apache_web
+- name: Install Apache Web Server for Debian
+  apt: name=apache2 state=latest
+    
+- name: Start webserves and make it enable on boot
+  service: name=apache2 state=started enabled=yes
+
+- name: Generate INDEX.HTML file
+  template: src=index.j2 dest={{ destin_folder }}/index.html mode=0555
+  notify:
+    - Restart Apache
+
+- name: cope myhomepage your servers
+  copy: src={{ item }} dest={{ destin_folder }} mode=0555
+  loop:
+      - "./1619541010_52-oir_mobi-p-nyashnie-kotiki-zhivotnie-krasivo-foto-57-730x856.jpg"
+      - "./56ad011ec285c15293cc604d.png"
+  notify: Restart Apache

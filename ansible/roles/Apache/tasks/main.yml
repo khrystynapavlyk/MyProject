@@ -1,0 +1,22 @@
+---
+# tasks file for deploy_LAMP_script
+- name: Ping my servers
+  ping:
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Apache service
+  apt:
+     name: apache2
+     state: latest
+
+- name: Enable UFW
+  command: ufw --force enable
+ 
+- name: Allow incoming traffic on port 80
+  command: ufw allow 80 
+
+- name: Reload UFW
+  command: ufw reload
