@@ -20,3 +20,30 @@
 
 - name: Reload UFW
   command: ufw reload
+
+- name: Configure virtual host
+  template:
+    src: khr_domain.j2
+    dest: "{{ destin_folder }}/khr_domain.conf"
+
+  notify: 
+    - Restart Apache2
+
+
+- name: Enable virtual host 
+  command: a2ensite khr_domain
+
+- name: Disable default virtual host
+  command: a2dissite 000-default
+
+- name: Reload Apache service
+  command: systemctl reload apache2
+  
+
+
+
+
+
+
+
+

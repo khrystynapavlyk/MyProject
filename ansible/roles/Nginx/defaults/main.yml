@@ -1,2 +1,4 @@
 ---
 # defaults file for Nginx
+destin_folder: /etc/nginx/sites-available
+destin_folder2: /etc/nginx/sites-enabled

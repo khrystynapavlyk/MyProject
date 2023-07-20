@@ -10,3 +10,12 @@
   become: yes
   roles:
     - Nginx
+
+- name: Inastall Mysql Php 
+  hosts: all
+  become: yes
+  roles:
+     - Mysql
+     - Php
+     - Domain
+     - Configure

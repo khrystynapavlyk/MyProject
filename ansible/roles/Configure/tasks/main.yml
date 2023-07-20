@@ -1,0 +1,9 @@
+---
+- name: Add index.html file
+  template: 
+    src: index.j2
+    dest: "{{ destin_folder2 }}/index.html"
+
+  notify: 
+     - Restart Apache2
+     - Restart Nginx

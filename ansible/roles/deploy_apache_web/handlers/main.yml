@@ -1,4 +1,20 @@
 ---
 # handlers file for deploy_apache_web
 - name: Restart Apache
-  service: name=apache2 state=restarted  
+  service: 
+     name: apache2 
+     state: restarted  
+
+- name: Restart Ngix
+  serivice: 
+    name: ngix 
+    state: restarted
+# - name: Determine Web Server
+#   set_fact:
+#     web_server: "{{ 'apache2' if ansible_service_mgr == 'systemd' else 'nginx' }}"
+
+# - name: Restart Web Server
+#   serivice:
+#     name: "{{ web_server }}"
+#     state: restarted
+#   when: web_server == 'apache2' or web_server == 'nginx'

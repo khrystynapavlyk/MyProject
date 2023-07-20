@@ -1,0 +1,66 @@
+---
+- name: Start installing mesql-server
+  apt:
+    name: mysql-server
+    state: present
+
+- name: Start mysql service
+  service:
+    name: mysql
+    state: started
+    enabled: yes  
+
+# - name: Install Python
+#   apt:
+#     name: python3
+#     state: present
+#   when: python_versivion.rc != 0
+
+# - name: Absent Python 
+#   apt:
+#     name: python
+#     state: absent
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Python3 
+  apt:
+    name: python3
+    state: present
+
+
+
+- name: Get list of MySQL users
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SELECT user FROM mysql.user;'"
+  register: mysql_users
+
+
+
+- name: Sets the root password
+  mysql_user:
+    name: root
+    password: "{{ db_root_pass }}"
+    hosts: localhost
+  when: " 'root' not in mysql_users.stdout"
+
+
+- name: Check if anonymous user exists
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SELECT User FROM mysql.user WHERE User = \"\";'"
+  register: anonymous_user_check
+  
+
+
+- name: Remove anonymous user
+  mysql_user:
+    name: '' 
+    login_user: root
+    login_password: "{{ db_root_pass }}"
+    login_host: localhost
+    host_all: yes
+    state: absent
+  when: "'root' in mysql_users.stdout and anonymous_user_check.stdout != ''"
+
+
+

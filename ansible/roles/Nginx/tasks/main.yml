@@ -25,4 +25,51 @@
   command: ufw allow 80 
 
 - name: Reload UFW
-  command: ufw reload     
+  command: ufw reload   
+
+- name: Install software-properties-common package
+  apt:
+    name: software-properties-common
+    state: present
+
+- name: Add the PPA repository for PHP
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
+- name: Install PHP-FPM and PHP MySQL extension
+  apt:
+    name:
+      - php7.2-fpm
+      - php7.2-mysql
+    state: present
+
+- name: Restart Nginx service
+  service:
+    name: nginx
+    state: restarted
+
+- name: Restart PHP-FPM service
+  service:
+    name: php7.2-fpm
+    state: restarted
+
+- name: Configure virtual host
+  template:
+    src: khr_domain.j2
+    dest: "{{ destin_folder }}/khr_domain"
+
+- name: Active configuration by linking to the configuration file
+  file:
+    src: "{{ destin_folder }}/khr_domain"
+    dest: "{{ destin_folder2 }}/khr_domain"
+    state: link
+
+- name: Unlink the default configuration file
+  file:
+    path: "{{ destin_folder2 }}/default"
+    state: absent
+
+
+- name: Reload Nginx service
+  command: systemctl reload nginx
