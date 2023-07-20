@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Gallery</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #a7d1e4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cat-info {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .cat-info h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+        }
+
+        .cat-image {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .cat-image:hover {
+            transform: scale(1.1);
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Cat Gallery</h1>
+        <p>Welcome to our collection of adorable cat images!</p>
+    </header>
+
+    <div class="cat-info">
+        <h2>About Cats</h2>
+        <p>Cats are wonderful creatures known for their playful nature and charming personalities. They are independent, curious, and have a unique way of showing affection. Whether they're napping in the sun, chasing toys, or rubbing against your leg, cats never fail to bring joy into our lives.</p>
+    </div>
+
+    <div class="container">
+        <img class="cat-image" src="https://i.chzbgr.com/full/9112752128/h94C6655E/cute-cat-looking-at-the-camera-with-its-ears-hiding" alt="Cat 1">
+        <img class="cat-image" src="https://cfvod.kaltura.com/p/2531481/sp/253148100/thumbnail/entry_id/1_krfvfigu/version/100011/width/478/height/269/type/3/width/478/height/269/type/3/quality/100" alt="Cat 2">
+        <img class="cat-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjBJgYeQXqx3vJr9yHsZnOU6_v4-7wVrgCbQ&usqp=CAU" alt="Cat 3">
+        <img class="cat-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxhdEgWqfxjPYVEwWl5Q7868kj03pXaQ71uQ&usqp=CAU" alt="Cat 4">
+        <img class="cat-image" src="https://pbs.twimg.com/profile_images/1478630817966567428/ACtQHh7G_400x400.jpg" alt="Cat 5">
+        <img class="cat-image" src="https://www.mypetsies.com/blog/app/uploads/2016/09/edfsaf.jpg" alt="Cat 6">
+    </div>
+
+    <div align="center"><img alt="" src="https://media.tenor.com/6hVEKMxmQLUAAAAC/cat-laptop.gif" width="1000px" height="600px">
+
+</body>
+
+</html>
