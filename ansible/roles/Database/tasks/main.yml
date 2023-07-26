@@ -1,0 +1,92 @@
+---
+
+- name: Install the python3-mysqldb
+  apt:
+     name: "{{ item }}"
+     state: present
+     update_cache: true
+  with_items:
+     - python3-mysqldb
+
+- name: Create Database
+  mysql_db:
+    name: "{{ db_name }}"
+    login_user: root
+    login_password: "{{ db_root_pass }}"
+    login_host: localhost
+    state: present
+
+- name: Get list of MySQL users
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SHOW DATABASES;'"
+  register: databases
+
+- debug: 
+    var: databases.stdout_lines
+
+- name: Create user for khr_databese 
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_user_pass }}"
+    host: '%'
+    login_user: root
+    login_password: "{{ db_root_pass }}"
+    login_host: localhost
+    state: present
+
+- name: Get list of MySQL users
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SELECT user FROM mysql.user;'"
+  register: mysql_users
+
+- debug: 
+    var: mysql_users.stdout_lines
+
+- name: Grant privileges for user to khr_databese 
+  mysql_user:
+    name: "{{ db_user }}"
+    host: '%'
+    priv: "{{ db_name }}.*:ALL"
+    login_user: root
+    login_password: "{{ db_root_pass }}"
+    login_host: localhost
+    state: present
+
+- name: Show grants of the {{ db_user }}
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SHOW GRANTS FOR {{ db_user }};'"
+  register: user_grants
+
+- debug: 
+    var: user_grants.stdout_lines
+
+- name: Show tables in khr_database
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SHOW TABLES IN {{ db_name }};'"
+  register: tables_in_khr_database    
+
+- name: Add sample data to database
+  template:
+    src: todo_list.sql.j2
+    dest: "{{ destin_folder }}/todo_list.sql"
+  when: "'todo_list' not in tables_in_khr_database.stdout"
+  
+- name: Insert sample data into database
+  mysql_db:
+    name: "{{ db_name }}"
+    state: import
+    target: "{{ destin_folder }}/todo_list.sql"
+    login_user: root
+    login_password: "{{ db_root_pass }}"
+    login_host: localhost
+  when: "'todo_list' not in tables_in_khr_database.stdout"
+
+- name: Show content of the table_name
+  shell: "mysql -u root -p{{ db_root_pass }} -h localhost -e 'SELECT * FROM {{ db_name }}.todo_list;'"
+  register: content_todo_list
+
+- debug:
+     var: content_todo_list.stdout_lines
+
+- name: Add todo_list.php
+  template:
+    src: todo_list.php.j2
+    dest: "{{ destin_folder2 }}/todo_list.php"
+
+

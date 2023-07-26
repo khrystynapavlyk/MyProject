@@ -1,0 +1,6 @@
+---
+# defaults file for Wordpress
+destin_folder: /etc/apache2/sites-available
+destin_folder2: /etc/nginx/sites-available
+destin_folder3: /etc/nginx/sites-enabled
+destin_folder4: /var/www/khr_wordpress

@@ -1,0 +1,59 @@
+server {
+        listen 80;
+
+        root /var/www/khr_wordpress;
+        index index.php index.html index.htm;
+
+         server_name khr_domain www.khr_domain;
+
+location / {
+                # try_files $uri $uri/ =404;
+                try_files $uri $uri/ /index.php?q=$uri&$args;
+        }
+
+# Pass PHP requests to PHP_FPM
+
+        location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+        }
+
+location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+        expires max;
+}
+
+location = /robots.txt {
+        access_log off;
+        log_not_found off;
+}
+
+
+error_page 404 /404.html;
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+                root /usr/share/nginx/html;
+        }
+
+# Deny Access to Hidden Files such as .htaccess
+
+location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+}
+
+# Disallow PHP files In the WordPress uploads directory
+
+location /wp-content/uploads/ {
+        location ~ \.php$ {
+                deny all;
+        }
+}
+}

@@ -1,15 +1,4 @@
 ---
-- name: Install PHP ans Apache packages
-  apt:
-    name: "{{ item }}"
-    state: present
-  loop: 
-    - php
-    - libapache2-mod-php
-    - php
-    - php-fpm
-
-
 - name: Testing PHP processing on my web server
   template:
     src: info.j2

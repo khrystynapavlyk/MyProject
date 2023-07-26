@@ -1,0 +1,6 @@
+---
+# vars file for Database
+db_name: khr_database
+db_root_pass: 123
+db_user: khr_user_db
+db_user_pass: 123

@@ -1,0 +1,15 @@
+---
+# vars file for Wordpress
+db_wp_name: khr_wp_database
+db_root_pass: 123
+db_wp_user: khr_user_wp
+db_user_wp_pass: 123
+wp_db_host: localhost
+key_1: "OoX!v{9p{nb2C$AK:[DWb8AmUWW)s}b_Tl|=9?H%oc$_VdFtokiE{h:t3_5C@nas"
+key_2: "i{8Z(Rp&an*Gg5Ika_h-m5~Z?phHNfut;m7^:&mX=VYM+M8fRg- gAMfWl~iLJ4n"
+key_3: "Y~G$Vo#=;*!q$5vk`1uq()UnDlF8s5b4.r?{s[R6)g8HEva9BI+Y%s*K:b%c,9}s"
+key_4: "0b)o{9Ba0 X`MgR=pc$`4P16_Kz:e/oPx5]4LY.SpB3v`@L/!QVMN~70y=k{.v?L"
+key_5: "*t-$I)y0&nD;sO{FL~gIami!vY5vHuSd+/%8s4kRAjKhfaLICElqe0%d^G.K44EV"
+key_6: "8%_|9roT^!/Ygj?r-}x/n.BXI0I*yF;P6~Os;[WoX|zt0<[-rm%{O88EavKGDY02"
+key_7: "2XQM9Im/eiY ~03J;,SD*UFb74vFUK`v:,>,OAp+9W0vZrp[JM)hL,8c;K(ENDQv"
+key_8: "*%E;:S+Tz`zt#90K,QEaZ^ T~ZRCY}X0WAlQ8J1WgQOUseP+7K$c}-NBX.nsh^*z"
