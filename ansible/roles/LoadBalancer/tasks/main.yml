@@ -1,0 +1,53 @@
+---
+# tasks file for LoadBalancer
+- name: Update apt cache
+  apt:
+   update_cache: yes
+
+- name: Install Nginx
+  apt: 
+    name: nginx
+    state: present
+
+- name: Start Nginx service
+  service: 
+    name: nginx
+    state: started
+
+- name: Start systemctl enable Nginx
+  command: systemctl enable nginx
+
+- name: Check systemctl status Nginx
+  command: systemctl status nginx
+  register: StatusNginx
+
+- debug:
+    var: StatusNginx.stdout_lines
+
+- name: Check ss -antpl
+  command: ss -antpl
+  register: OutputOfAntpl
+
+- debug: 
+    var: OutputOfAntpl.stdout_lines
+
+- name: Start ufw allow 'Nginx HTTP'
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Check ufw status
+  command: ufw status
+  register: StatusUFW
+
+- debug: 
+    var: StatusUFW.stdout_lines
+
+
+- name: Start to create an Nginx virtual host configuration file to implement the load balancer
+  template:
+    src: loadbalancer.conf.j2
+    dest: "{{ destin_folder }}/loadbalancer.conf"
+  notify: 
+    - Restart Nginx

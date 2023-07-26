@@ -205,5 +205,3 @@
   template:
     src: wp-config.php.j2
     dest: "{{ destin_folder4 }}/wp-config.php"
-
-

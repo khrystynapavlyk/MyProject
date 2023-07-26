@@ -11,7 +11,7 @@
   roles:
     - Nginx
 
-- name: Inastall Mysql Php 
+- name: Inastall Mysql, Php, Databases, Wordpress
   hosts: all
   become: yes
   roles:
@@ -21,3 +21,9 @@
      - Php
      - Database
      - Wordpress
+
+- name: Install Load Balancer
+  hosts: LINUX_3
+  become: yes
+  roles:
+    - LoadBalancer

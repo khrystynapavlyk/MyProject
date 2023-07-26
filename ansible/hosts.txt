@@ -5,4 +5,5 @@ Linux1 ansible_host=192.168.119.143
 [LINUX_2]
 Linux2 ansible_host=192.168.119.142 
 
-
+[LINUX_3]
+Linux3 ansible_host=192.168.119.140
