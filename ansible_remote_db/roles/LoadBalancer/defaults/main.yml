@@ -1,0 +1,3 @@
+---
+# defaults file for LoadBalancer
+destin_folder: /etc/nginx/conf.d

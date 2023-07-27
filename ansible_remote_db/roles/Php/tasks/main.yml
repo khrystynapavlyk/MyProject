@@ -1,0 +1,5 @@
+---
+- name: Testing PHP processing on my web server
+  template:
+    src: info.j2
+    dest: "{{ destin_folder }}/info.php"

@@ -1,0 +1,6 @@
+---
+# vars file for Database
+# db_root_pass: write your password
+db_wp_name: khr_wp_database_rm
+db_wp_user: khr_user_wp_rm
+# db_user_wp_pass: write your password

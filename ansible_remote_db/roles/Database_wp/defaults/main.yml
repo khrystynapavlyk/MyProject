@@ -1,0 +1,4 @@
+---
+# defaults file for Database
+destin_folder: /tmp
+destin_folder2: /var/www/khr_domain

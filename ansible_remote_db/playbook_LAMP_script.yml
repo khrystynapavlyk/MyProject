@@ -10,6 +10,13 @@
   become: yes
   roles:
     - Nginx
+    
+- name: Inastall Mysql, Databases
+  hosts: LINUX_4
+  become: yes
+  roles:
+    - Mysql
+    - Database_wp
 
 - name: Inastall Mysql, Php, Databases, Wordpress
   hosts: WEB_SERVER_ALL
@@ -17,13 +24,11 @@
   roles:
      - Domain
      - Configure
-     - Mysql
      - Php
-     - Database
      - Wordpress
 
 - name: Install Load Balancer
   hosts: LINUX_3
   become: yes
   roles:
-    - LoadBalancer
+     - LoadBalancer

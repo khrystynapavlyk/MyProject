@@ -1,0 +1,10 @@
+<VirtualHost *:80>
+    ServerName example.com
+    DocumentRoot /var/www/khr_wordpress
+    <Directory /var/www/khr_wordpress>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+</VirtualHost>

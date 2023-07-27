@@ -1,0 +1,5 @@
+---
+# vars file for LoadBalancer
+ip_server1: "{{ hostvars['Linux1']['ansible_host']}}"
+ip_server2: "{{ hostvars['Linux2']['ansible_host']}}"
+ip_server_lb: "{{ hostvars['Linux3']['ansible_host']}}"

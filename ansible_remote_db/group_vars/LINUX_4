@@ -1,0 +1,4 @@
+---
+ansible_user                 : khr1
+ansible_ssh_private_key_file : /home/khr/.ssh/id_rsa  
+owner                        : khr

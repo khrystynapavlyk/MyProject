@@ -1,0 +1,56 @@
+---
+# tasks file for deploy_LAMP_script
+- name: Ping my servers
+  ping:
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install Apache service
+  apt:
+     name: apache2
+     state: latest
+
+- name: Enable UFW
+  command: ufw --force enable
+ 
+- name: Allow incoming traffic on port 80
+  command: ufw allow 80 
+
+- name: Reload UFW
+  command: ufw reload
+
+- name: Configure virtual host
+  template:
+    src: khr_domain.j2
+    dest: "{{ destin_folder }}/khr_domain.conf"
+
+  notify: 
+    - Restart Apache2
+
+- name: Enable virtual host 
+  command: a2ensite khr_domain
+
+- name: Disable default virtual host
+  command: a2dissite 000-default
+
+- name: Reload Apache service
+  command: systemctl reload apache2
+  
+- name: Install PHP ans Apache packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: 
+    - php
+    - libapache2-mod-php
+    - php-mysql
+
+
+
+
+
+
+
+

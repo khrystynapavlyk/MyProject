@@ -1,0 +1,4 @@
+---
+# vars file for Mysql
+#  db_root_pass: write your password
+ ansible_python_interpreter: /usr/bin/python3

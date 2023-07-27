@@ -1,0 +1,158 @@
+---
+# tasks file for Wordpress
+- name: Install php extensions
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: 
+    - php-curl 
+    - php-gd 
+    - php-mbstring 
+    - php-xml 
+    - php-xmlrpc 
+    - php-soap 
+    - php-intl 
+    - php-zip
+
+- name: Restart Apache2
+  service:
+     name: apache2
+     state: restarted
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Restart Nginx
+  service:
+     name: nginx
+     state: restarted
+  when: inventory_hostname in groups['LINUX_2']
+  
+- name: Creating khr_wordpress.conf for Apache2
+  template:
+    src: khr_wordpress.conf.j2
+    dest: "{{ destin_folder }}/khr_wordpress.conf"
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Creating khr_wordpress for Nginx
+  template:
+    src: khr_wordpress.j2
+    dest: "{{ destin_folder2 }}/khr_wordpress"
+  when: inventory_hostname in groups['LINUX_2']
+
+- name: Enable virtual host 
+  command: a2ensite khr_wordpress.conf
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Disable default virtual host
+  command: a2dissite khr_domain.conf
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Reload Apache service
+  command: systemctl reload apache2
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Start apache2ctl configtest
+  command: sudo apache2ctl configtest
+  register: OUTPUT
+  when: inventory_hostname in groups['LINUX_1']
+
+- debug: 
+    var: OUTPUT.stdout_lines
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Systemctl restart apache2
+  command: systemctl restart apache2
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: A2enmod rewrite
+  command: a2enmod rewrite
+  when: inventory_hostname in groups['LINUX_1']  
+
+- name: Apache2ctl configtest
+  command: apache2ctl configtest
+  when: inventory_hostname in groups['LINUX_1']  
+
+- name: Systemctl restart apache2
+  command: systemctl restart apache2
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Active configuration by linking to the configuration file
+  file:
+    src: "{{ destin_folder2 }}/khr_wordpress"
+    dest: "{{ destin_folder3 }}/khr_wordpress"
+    state: link
+  when: inventory_hostname in groups['LINUX_2']
+
+- name: Unlink the default configuration file
+  file:
+    path: "{{ destin_folder3 }}/khr_domain"
+    state: absent
+  when: inventory_hostname in groups['LINUX_2']
+  notify: 
+     - Restart Nginx
+
+- name: Systemctl restart php7.2-fpm
+  command: systemctl restart php7.2-fpm
+  when: inventory_hostname in groups['LINUX_2']
+
+- name: Download Wordpress
+  get_url:
+    url: https://wordpress.org/latest.tar.gz
+    dest: /tmp/latest.tar.gz
+
+- name: Extract WordPress archive
+  unarchive:
+    src: /tmp/latest.tar.gz
+    dest: /tmp
+    remote_src: yes
+    creates: /tmp/wordpress
+
+- name: Copy wp-config.php
+  copy:
+    src: /tmp/wordpress/wp-config-sample.php
+    dest: /tmp/wordpress/wp-config.php
+    remote_src: yes
+
+- name: Copy Wordpress files to web server directory
+  copy:
+    src: /tmp/wordpress/.
+    dest: /var/www/khr_wordpress
+    remote_src: yes
+
+- name: Set owership for WordPress files
+  file:
+    path: /var/www/khr_wordpress
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+
+- name: Set directory permissions to 750
+  file:
+    path: /var/www/khr_wordpress
+    state: directory
+    mode: '0750'
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Find all files in /var/www/khr_wordpress
+  find:
+    path: /var/www/khr_wordpress
+    file_type: file 
+  register: foundFiles  
+  when: inventory_hostname in groups['LINUX_1']
+
+- debug: 
+    var: foundFiles.stdout_lines
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Set file permissions to 640
+  file:
+    path: "{{ item.path }}"
+    state: file
+    mode: '0640'
+  loop: "{{ foundFiles.files }}"
+  when: inventory_hostname in groups['LINUX_1']
+
+- name: Start setting Up the WordPress Configuration File
+  template:
+    src: wp-config.php.j2
+    dest: "{{ destin_folder4 }}/wp-config.php"

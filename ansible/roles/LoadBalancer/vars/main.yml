@@ -2,4 +2,4 @@
 # vars file for LoadBalancer
 ip_server1: 192.168.119.143
 ip_server2: 192.168.119.142
-ip_server_lb:  192.168.119.140
+ip_server_lb: 192.168.119.140
